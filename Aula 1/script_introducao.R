@@ -41,14 +41,14 @@ head(A801)
 # SALVAR OS DADOS --------------------------------------------------------------
 #_______________________________________________________________________________
 # salvando em CSV
-write.csv(IBGE, "C:/Users/torre/Desktop/series_de_tempo/exportacao/BASE1.csv", row.names = FALSE)
+write.csv(IBGE, "C:/Econometria_esalq/LIXO/BASE1.csv", row.names = FALSE)
 # Carregue o pacote openxlsx:
 #install.packages("openxlsx")
 # library(openxlsx)
 # Exporte o data frame para um arquivo Excel
-openxlsx::write.xlsx(IBGE, file = "C:/Users/torre/Desktop/series_de_tempo/exportacao/IBGE.xlsx")
+openxlsx::write.xlsx(IBGE, file = "C:/Econometria_esalq/LIXO/IBGE.xlsx")
 # Salvando em formato RDS (formato do R)
-saveRDS(IBGE,"C:/Users/torre/Desktop/series_de_tempo/exportacao/IBGE.rds")
+saveRDS(IBGE,"C:/Econometria_esalq/LIXO/IBGE.rds")
 #_______________________________________________________________________________
 # ALTERACAO DOS DADOS (pacote tidyr)--------------------------------------------
 #_______________________________________________________________________________
@@ -143,7 +143,7 @@ IBGE|> ggplot2::ggplot() + ggplot2::geom_sf(ggplot2::aes( fill=categoria),color=
   ggplot2::labs(fill="Percentual")+
   ggplot2::scale_fill_manual(values = c('#FFFF00','#FFC600','#FF8D00',
                                                  '#FF5500','#FF1C00'))
-                                                 # agrupando informacoes por estado:
+# agrupando informacoes por estado:
 IBGE <- IBGE  |> as.data.frame() |> dplyr::select(-geom)
 dplyr::glimpse(IBGE)
 # se usa as funcoes "group_by" e "summarise"
