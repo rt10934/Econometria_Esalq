@@ -1,10 +1,10 @@
 w################################################################################
 ################################################################################
-##### Departamento de Economia, Administração e Sociologia - LES/ESALQ/USP #####
-###########       Aula Pática de Econometria - RStudio            ##############
+##### Departamento de Economia, Administracao e Sociologia - LES/ESALQ/USP #####
+###########       Aula Pratica de Econometria - RStudio            ##############
 
 
-#1- Apresentação do RStudio
+#1- Apresentacao do RStudio
 library(ggplot2)
 library(ggpubr)
 library(tidyverse)
@@ -25,13 +25,13 @@ var(wage1$wage)
 
 ### REGRESSAO SIMPLES -----
 ## EXEMPLO 1 ------------------------------------------------------------------
-## Verificar o impacto da educação no salário. ----
-#Usaramos as variáveis:
-#wage - salário médio por hora, em R$
-#educ - anos de estudo do funcionário.
+## Verificar o impacto da educacao no salario. ----
+#Usaramos as variaveis:
+#wage - salario médio por hora
+#educ - anos de estudo do funcionario.
 reg<-lm(wage ~ educ, data = wage1)
 summary(reg)
-# interpretacao: O aumento de um ano de estudo aumenta o os rendimentos por hora em 
+# interpretacao: O aumento de um ano de estudo aumenta os rendimentos por hora em 
 # 0,54 centavos de dolar:
 
 #GRÁFICO
@@ -49,28 +49,24 @@ ggplot(data=wage1,mapping= aes(x=educ, y = wage))+
 
 #Testar homocedasticidade
 
-#H0: Há homocedasticidade: p-valor > 0.05
+#H0: Ha homocedasticidade: p-valor > 0.05
 #Ha: Não há homocedasticidade: p-valor <= 0.05
 
 bptest(reg)
 
-#Teste de normalidade dos resíduos
+#Teste de normalidade dos residuos
 
-#H0:Distribuição normal : p-valor > 0.05
-#Ha: Não há distribuição normal: p-valor <= 0.05
+#H0:Distribuicao normal : p-valor > 0.05
+#Ha: Nao ha distribuicao normal: p-valor <= 0.05
 
 shapiro.test(reg$residuals)
 
-# Independência dos Resíduos:
-#H0: : p-valor > 0.05
-#Ha: : p-valor <= 0.05
-
-### Incorporação da Não-Linearidade na Regressão Simples ####
+### Incorporacao da Nao-Linearidade na Regressao Simples ####
 
 ##EXEMPLO 2 --------------------------------------------------------------------
 
 #Podemos estimar o modelo Log-Log fazendo:
-
+#log(salario)= bo+b1*log(educ)+u
 # OBS: Zero nao pode ser logaritimizado, entao aqui filtraremos para poder usar a mesma base:
 wage11 <- wage1 |> dplyr::filter(!(educ==0))
 #Usaremos: 
@@ -83,36 +79,30 @@ summary(reg1)
 # 0,825%.
 #Testar homocedasticidade
 
-#H0: Há homocedasticidade: p-valor > 0.05
-#Ha: Não há homocedasticidade: p-valor <= 0.05
+#H0: Ha homocedasticidade: p-valor > 0.05
+#Ha: Nao ha homocedasticidade: p-valor <= 0.05
 
 bptest(reg1)
 
-#Teste de normalidade dos resíduos
+#Teste de normalidade dos residuos
 
-#H0:Distribuição normal : p-valor > 0.05
-#Ha: Não há distribuição normal: p-valor <= 0.05
+#H0:Distribuicao normal : p-valor > 0.05
+#Ha: Nao ha distribuicao normal: p-valor <= 0.05
 
 shapiro.test(reg1$residuals)
 
-# Independência dos Resíduos:
-#H0: : p-valor > 0.05
-#Ha: : p-valor <= 0.05
-
-#O aumento em um ponto percentual nas vendas eleva o salario do CEO em 
-#aproximadamente 0,257%
 
 
 ## EXEMPLO 3 -------------------------------------------------------------------
 
 # Vamos estimar o modelo Log-Lin:
-#log(salário)= bo+b1*educ+u
+#log(salario)= bo+b1*educ+u
 
 reg2 <- lm (log(wage) ~ (educ), data = wage1)
 #Para visualizar as estimativas usamos summary()
 summary(reg2)
 
-#O aumento em um ano adicional de escolaridade aumenta o salário em 
+#O aumento em um ano adicional de escolaridade aumenta o salario em 
 #  8,27% (0,083*100) - semi elasticidade
 0.082744*100
 
@@ -121,21 +111,14 @@ summary(reg2)
 #H0: Há homocedasticidade: p-valor > 0.05
 #Ha: Não há homocedasticidade: p-valor <= 0.05
 
-bptest(reg1)
+bptest(reg2)
 
-#Teste de normalidade dos resíduos
+#Teste de normalidade dos residuos
 
 #H0:Distribuição normal : p-valor > 0.05
 #Ha: Não há distribuição normal: p-valor <= 0.05
 
-shapiro.test(reg1$residuals)
-
-# Independência dos Resíduos:
-#H0: : p-valor > 0.05
-#Ha: : p-valor <= 0.05
-
-dwtest(reg1)
-durbinWatsonTest(reg1)
+shapiro.test(reg2$residuals)
 
 
 
@@ -146,8 +129,6 @@ summary(reg3)
 # O aumento em 1% nos anos de estudos leva a um aumento na remuneracao por hora em 0,0533
 # centavos de dolar
 5.330/100
-
-plot(reg3)
 
 #Testar homocedasticidade
 
@@ -163,9 +144,6 @@ bptest(reg3)
 
 shapiro.test(reg3$residuals)
 
-# Independência dos Resíduos:
-#H0: : p-valor > 0.05
-#Ha: : p-valor <= 0.05
 #-------------------------------------------------------------------------------
 
 # nivel 
@@ -185,7 +163,7 @@ library(stargazer)
 models <- list(reg, reg1, reg2, reg3)
 
 # Nomear os modelos
-names(models) <- c("Modelo 1: Nível", "Modelo 2: Log-Log", "Modelo 3: Log-Lin", "Modelo 4: Lin-Log")
+names(models) <- c("Modelo 1: Nível", "Modelo 2: Log-Log", "Modelo 4: Lin-Log", "Modelo 3: Log-Lin")
 
 # Gerar a tabela conjunta de resultados
 stargazer(models, type = "text")
