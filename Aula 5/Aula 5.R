@@ -16,11 +16,13 @@ summary(model_sleep)
 
 # Em que idade se os individuos dormem menos?----
 # \partial horas/ \partial idade = B_3 + 2*B_4 idade
-# ponto de maximo : B_3 > 0 e B_4 < 0 
-# ponto de minimo : B_3 < 0 e B_4 > 0 
+# ponto de maximo :  B_4 < 0 
+# ponto de minimo : B_4 > 0 
 
 # -B_3 + 2*B_4 idade
 # 2*B_4 idade = B_3
 # idade = B_3/( 2*B_4 )
 
 (-model_sleep$coefficients[4])/(model_sleep$coefficients[5]*2)
+
+# o ponto e* de minimo, o que indica que a idade em que menos se dorme e* 33,85 anos.
