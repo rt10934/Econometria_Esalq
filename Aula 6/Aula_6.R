@@ -1,4 +1,4 @@
-# DECLARAR DIRETORIO 
+# DECLARAR DIRETORIO () caso a versao nao rode "https://cran.r-project.org/bin/windows/base/old/"
 setwd("C:/Econometria_esalq/Econometria_Esalq/Aula 6") # OU "Ctrl+Shif+H"
 # importando dados:
 #install.packages("modeltime","timetk","tidymodels","tidyverse","lubridate","ggplot2")
@@ -61,8 +61,8 @@ ipc |>log() |> ur.df( type = "drift", selectlags = "AIC") |> summary() # constan
 ipc |>log() |> ur.df( type = "trend", selectlags = "AIC") |> summary()  # trend
 # KPSS
 help(ur.kpss)
-ipc |>log() |> ur.kpss(  type="mu") |> summary() # constante
-ipc |>log() |> ur.kpss(  type="tau") |> summary() # trend
-
+ipc |>log() |> ur.kpss(  type="mu",lags = "long") |> summary() # constante
+ipc |>log() |> ur.kpss(  type="tau",lags = "long") |> summary() # trend
+ipc |>log() |> diff() |> ur.kpss(  type="mu", lags = "long") |> summary() # primeira diferenca
 
 
